@@ -1,0 +1,36 @@
+anchor=bottom-right
+margin=12
+width=360
+height=120
+padding=16
+border-size=1
+border-radius=14
+background-color=#1a1110cc
+border-color=#a08c8940
+text-color=#f1dfdc
+progress-color=over #ffb4a840
+font=JetBrainsMono Nerd Font 11
+default-timeout=5000
+ignore-timeout=0
+max-visible=5
+sort=-time
+icon-path=/usr/share/icons/Papirus-Dark
+max-icon-size=48
+
+[urgency=low]
+background-color=#1a1110bb
+border-color=#a08c8925
+text-color=#d8c2be
+default-timeout=3000
+
+[urgency=normal]
+background-color=#1a1110cc
+border-color=#a08c8940
+text-color=#f1dfdc
+default-timeout=5000
+
+[urgency=critical]
+background-color=#93000acc
+border-color=#ffb4ab60
+text-color=#ffdad6
+default-timeout=0

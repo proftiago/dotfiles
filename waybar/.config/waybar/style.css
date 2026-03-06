@@ -1,0 +1,157 @@
+@import "colors.css";
+
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+/* ── BARRA PRINCIPAL ── */
+.modules-left,
+.modules-center,
+.modules-right {
+    background: alpha(@surface, 0.45);
+    border: 1px solid alpha(@on_surface, 0.12);
+    border-radius: 14px;
+    margin: 6px 4px;
+    padding: 0 10px;
+}
+
+/* ── MÓDULOS ── */
+#workspaces button {
+    color: @on_surface;
+    background: transparent;
+    border-radius: 10px;
+    padding: 2px 8px;
+    margin: 3px 2px;
+    transition: all 0.2s ease;
+}
+
+#workspaces button.active {
+    background: alpha(@primary, 0.35);
+    color: @primary;
+    border: 1px solid alpha(@primary, 0.5);
+}
+
+#workspaces button:hover {
+    background: alpha(@primary_container, 0.3);
+}
+
+#clock,
+#battery,
+#network,
+#pulseaudio,
+#cpu,
+#memory,
+#tray,
+#backlight {
+    color: @on_surface;
+    padding: 0 10px;
+    border-radius: 10px;
+}
+
+#clock {
+    color: @primary;
+    font-weight: bold;
+}
+
+#battery.warning {
+    color: #e0b000;
+}
+
+#battery.critical {
+    color: #e05050;
+}
+
+tooltip {
+    background: alpha(@surface_variant, 0.85);
+    border: 1px solid alpha(@outline, 0.3);
+    border-radius: 10px;
+    color: @on_surface;
+}
+
+#custom-power {
+    color: @primary;
+    background: alpha(@primary_container, 0.35);
+    border: 1px solid alpha(@primary, 0.4);
+    border-radius: 10px;
+    padding: 0 12px;
+    font-size: 16px;
+    margin: 3px 6px 3px 0;
+    transition: all 0.2s ease;
+}
+
+#custom-power:hover {
+    background: alpha(@primary, 0.35);
+    color: @on_primary;
+}
+
+/* ── Updates ── */
+#custom-updates {
+    padding: 0 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+#custom-updates.updated {
+    color: transparent;
+    min-width: 0;
+    padding: 0;
+}
+
+#custom-updates.has-updates {
+    color: #f9e2af;
+    background: rgba(249, 226, 175, 0.12);
+    border: 1px solid rgba(249, 226, 175, 0.25);
+}
+
+#custom-updates.has-updates:hover {
+    background: rgba(249, 226, 175, 0.22);
+    color: #fff;
+}
+
+/* ── Música ── */
+#music {
+    background: alpha(@surface_variant, 0.3);
+    border-radius: 10px;
+    padding: 0 6px;
+    margin: 3px 2px;
+}
+
+#custom-media-prev,
+#custom-media-next {
+    color: alpha(@on_surface, 0.6);
+    padding: 0 4px;
+    font-size: 12px;
+    transition: color 0.2s ease;
+}
+
+#custom-media-prev:hover,
+#custom-media-next:hover {
+    color: @primary;
+}
+
+#custom-media-play {
+    color: @primary;
+    padding: 0 5px;
+    font-size: 13px;
+}
+
+#custom-media-title {
+    color: @on_surface;
+    padding: 0 8px 0 2px;
+    font-style: italic;
+    font-size: 12px;
+}
+
+/* ── Clima ── */
+#custom-weather {
+    color: @secondary;
+    padding: 0 10px;
+}

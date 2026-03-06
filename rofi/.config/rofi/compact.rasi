@@ -1,0 +1,81 @@
+configuration {
+  modi:                "drun,run,window";
+  show-icons:          true;
+  icon-theme:          "Papirus-Dark";
+  font:                "JetBrainsMono Nerd Font 12";
+  display-drun:        "  Apps";
+  display-run:         "  Run";
+  display-window:      "  Windows";
+  drun-display-format: "{name}";
+  hover-select:        true;
+  me-select-entry:     "";
+  me-accept-entry:     "MousePrimary";
+}
+
+@theme "/dev/null"
+@import "~/.config/rofi/colors.rasi"
+
+window {
+  background-color: @bg;
+  border:           2px solid;
+  border-color:     @accent;
+  border-radius:    14px;
+  width:            520px;
+  padding:          12px;
+}
+
+mainbox {
+  background-color: transparent;
+  spacing:          8px;
+}
+
+inputbar {
+  background-color: @bg-alt;
+  border-radius:    10px;
+  padding:          8px 12px;
+  spacing:          6px;
+  children:         [prompt, entry];
+}
+
+prompt {
+  background-color: transparent;
+  text-color:       @accent;
+  font:             "JetBrainsMono Nerd Font Bold 12";
+}
+
+entry {
+  background-color:  transparent;
+  text-color:        @fg;
+  placeholder:       "Pesquisar...";
+  placeholder-color: @fg-alt;
+}
+
+listview {
+  background-color: transparent;
+  lines:            8;
+  spacing:          4px;
+  scrollbar:        false;
+  cycle:            true;
+}
+
+element {
+  background-color: transparent;
+  padding:          8px 10px;
+  border-radius:    8px;
+  spacing:          8px;
+}
+
+element normal.normal    { background-color: transparent; text-color: @fg; }
+element selected.normal  { background-color: @accent;     text-color: @on-accent; }
+element alternate.normal { background-color: transparent; text-color: @fg; }
+
+element-text {
+  background-color: transparent;
+  text-color:       inherit;
+  vertical-align:   0.5;
+}
+
+element-icon {
+  background-color: transparent;
+  size:             22px;
+}

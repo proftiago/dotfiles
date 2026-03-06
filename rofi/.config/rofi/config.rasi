@@ -1,0 +1,108 @@
+configuration {
+  modi:                "drun,run,window";
+  show-icons:          true;
+  icon-theme:          "Papirus-Dark";
+  font:                "JetBrainsMono Nerd Font Mono 13";
+  display-drun:        "  Apps";
+  display-run:         "  Run";
+  display-window:      "  Windows";
+  drun-display-format: "{name}\n<small>{comment}</small>";
+  hover-select:        true;
+  me-select-entry:     "";
+  me-accept-entry:     "MousePrimary";
+  scroll-method:       0;
+  matching:            "fuzzy";
+}
+
+@theme "/dev/null"
+@import "~/.config/rofi/colors.rasi"
+
+window {
+  background-color: @bg;
+  border:           2px solid;
+  border-color:     @accent;
+  border-radius:    16px;
+  width:            580px;
+  padding:          8px;
+}
+
+mainbox {
+  background-color: transparent;
+  spacing:          0;
+  children:         [inputbar, message, listview];
+}
+
+inputbar {
+  background-color: @bg-alt;
+  border-radius:    12px;
+  padding:          14px 18px;
+  spacing:          12px;
+  margin:           0 0 8px 0;
+  children:         [prompt, entry];
+}
+
+prompt {
+  background-color: transparent;
+  text-color:       @accent;
+  font:             "JetBrainsMono Nerd Font Mono 18";
+  vertical-align:   0.5;
+}
+
+entry {
+  background-color:  transparent;
+  text-color:        @fg;
+  font:              "JetBrainsMono Nerd Font Mono 17";
+  placeholder:       "Pesquisar apps, arquivos...";
+  placeholder-color: @fg-alt;
+  vertical-align:    0.5;
+}
+
+message {
+  background-color: @bg-high;
+  border-radius:    1px;
+  padding:          1px;
+  margin:           0 4px 6px 4px;
+}
+
+textbox {
+  background-color: transparent;
+  text-color:       transparent;
+}
+
+listview {
+  background-color: transparent;
+  lines:            6;
+  spacing:          2px;
+  scrollbar:        false;
+  cycle:            true;
+  dynamic:          true;
+}
+
+element {
+  background-color: transparent;
+  padding:          10px 12px;
+  border-radius:    10px;
+  spacing:          14px;
+  orientation:      horizontal;
+  children:         [element-icon, element-text];
+}
+
+element normal.normal    { background-color: transparent; text-color: @fg; }
+element selected.normal  { background-color: @accent;     text-color: @on-accent; }
+element alternate.normal { background-color: transparent; text-color: @fg; }
+element urgent.normal    { background-color: transparent; text-color: @urgent; }
+element selected.urgent  { background-color: @urgent;     text-color: @on-accent; }
+
+element-icon {
+  background-color: transparent;
+  size:             38px;
+  border-radius:    8px;
+  vertical-align:   0.5;
+}
+
+element-text {
+  background-color: transparent;
+  text-color:       inherit;
+  vertical-align:   0.5;
+  highlight:        @accent2;
+}
