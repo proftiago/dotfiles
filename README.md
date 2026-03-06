@@ -1,4 +1,4 @@
-# dotfiles — Tiago
+# Irajubarch/OS
 
 Arch Linux + Hyprland setup gerenciado com [GNU Stow](https://www.gnu.org/software/stow/).
 
