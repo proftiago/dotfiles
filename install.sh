@@ -2,7 +2,7 @@
 
 # ╔══════════════════════════════════════════════════════════╗
 # ║         DOTFILES INSTALLER — Tiago (proftiago)          ║
-# ║         Arch Linux · Hyprland · Wayland                 ║
+# ║         IrajuArch OS · Arch Linux · Hyprland            ║
 # ╚══════════════════════════════════════════════════════════╝
 
 set -e
@@ -34,38 +34,68 @@ ask() {
 clear
 echo -e "${PURPLE}${BOLD}"
 cat <<'EOF'
-  ███████╗███████╗████████╗██╗   ██╗██████╗
-  ██╔════╝██╔════╝╚══██╔══╝██║   ██║██╔══██╗
-  ███████╗█████╗     ██║   ██║   ██║██████╔╝
-  ╚════██║██╔══╝     ██║   ██║   ██║██╔═══╝
-  ███████║███████╗   ██║   ╚██████╔╝██║
-  ╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝
+
+  ██╗██████╗  █████╗      ██╗██╗   ██╗ █████╗ ██████╗  ██████╗██╗  ██╗
+  ██║██╔══██╗██╔══██╗     ██║██║   ██║██╔══██╗██╔══██╗██╔════╝██║  ██║
+  ██║██████╔╝███████║     ██║██║   ██║███████║██████╔╝██║     ███████║
+  ██║██╔══██╗██╔══██║██   ██║██║   ██║██╔══██║██╔══██╗██║     ██╔══██║
+  ██║██║  ██║██║  ██║╚█████╔╝╚██████╔╝██║  ██║██║  ██║╚██████╗██║  ██║
+  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚════╝  ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝
+
+                        ArchOS  ·  by proftiago
 EOF
 echo -e "${NC}"
-echo -e "${BOLD}  Arch Linux + Hyprland — Dotfiles Installer${NC}"
-echo -e "${CYAN}  github.com/proftiago/dotfiles${NC}\n"
-echo -e "${YELLOW}  Este script vai instalar e configurar o sistema.${NC}"
+echo -e "${CYAN}  github.com/proftiago/dotfiles${NC}"
 echo -e "${YELLOW}  Cada etapa pergunta antes de executar.\n${NC}"
 
 sleep 1
 
 # ══════════════════════════════════════════════════════════
-# ETAPA 1 — YAY (AUR helper)
+# ETAPA 1 — AUR HELPER
 # ══════════════════════════════════════════════════════════
-title "1. AUR Helper (yay)"
+title "1. AUR Helper"
+
+AUR_HELPER=""
 
 if command -v yay &>/dev/null; then
-    success "yay já instalado"
+    AUR_HELPER="yay"
+    success "yay já instalado — usando yay"
+elif command -v paru &>/dev/null; then
+    AUR_HELPER="paru"
+    success "paru já instalado — usando paru"
 else
-    if ask "Instalar yay?"; then
+    echo -e "${CYAN}${BOLD}  ?${NC} Qual AUR helper instalar?"
+    echo -e "    ${YELLOW}1)${NC} yay"
+    echo -e "    ${YELLOW}2)${NC} paru"
+    read -rp "  Escolha [1/2]: " choice
+
+    case "$choice" in
+    1)
         info "Instalando yay..."
-        sudo pacman -S --needed git base-devel
+        sudo pacman -S --needed git base-devel --noconfirm
         git clone https://aur.archlinux.org/yay.git /tmp/yay
         cd /tmp/yay && makepkg -si --noconfirm
         cd ~ && rm -rf /tmp/yay
+        AUR_HELPER="yay"
         success "yay instalado"
-    fi
+        ;;
+    2)
+        info "Instalando paru..."
+        sudo pacman -S --needed git base-devel --noconfirm
+        git clone https://aur.archlinux.org/paru.git /tmp/paru
+        cd /tmp/paru && makepkg -si --noconfirm
+        cd ~ && rm -rf /tmp/paru
+        AUR_HELPER="paru"
+        success "paru instalado"
+        ;;
+    *)
+        error "Opção inválida. Usando yay como padrão."
+        AUR_HELPER="yay"
+        ;;
+    esac
 fi
+
+echo -e "\n${GREEN}  AUR helper selecionado: ${BOLD}$AUR_HELPER${NC}"
 
 # ══════════════════════════════════════════════════════════
 # ETAPA 2 — PACOTES DO SISTEMA
@@ -102,11 +132,10 @@ PACMAN_PKGS=(
     telegram-desktop pavucontrol blueman bluez bluez-utils
 
     # Dev
-    git github-cli go npm python-pip ripgrep fd lazygit imagemagick
-    bc boxes fastfetch
+    git github-cli go npm python-pip ripgrep fd lazygit imagemagick bc fastfetch
 
     # Calendário
-    khal vdirsyncer gcalcli
+    khal vdirsyncer
 
     # Mídia
     ffmpegthumbnailer tumbler ueberzugpp guvcview
@@ -119,18 +148,16 @@ PACMAN_PKGS=(
     adw-gtk-theme gnome-themes-extra breeze qt5-graphicaleffects qt6-5compat
     papirus-icon-theme
 
-    # Ícones
-    papirus-icon-theme
-
     # Boot
     plymouth
 )
 
 AUR_PKGS=(
-    gradience
     yay-debug
     swayosd-git
     matugen
+    gradience
+    gcalcli
     wleave wofi
     foot cage
     greetd greetd-regreet-git
@@ -151,9 +178,9 @@ if ask "Instalar pacotes do pacman? (${#PACMAN_PKGS[@]} pacotes)"; then
     success "Pacotes pacman instalados"
 fi
 
-if ask "Instalar pacotes do AUR? (${#AUR_PKGS[@]} pacotes)"; then
+if ask "Instalar pacotes do AUR com $AUR_HELPER? (${#AUR_PKGS[@]} pacotes)"; then
     info "Instalando pacotes AUR..."
-    yay -S --needed --noconfirm "${AUR_PKGS[@]}"
+    $AUR_HELPER -S --needed --noconfirm "${AUR_PKGS[@]}"
     success "Pacotes AUR instalados"
 fi
 
@@ -206,9 +233,6 @@ if ask "Ativar serviços do sistema?"; then
 fi
 
 if ask "Ativar serviços do usuário (wallpaper-time, dotfiles-backup)?"; then
-    systemctl --user daemon-reload
-
-    # Cria timers se não existirem
     mkdir -p ~/.config/systemd/user
 
     cat >~/.config/systemd/user/wallpaper-time.service <<'EOF'
@@ -305,11 +329,19 @@ fi
 # ══════════════════════════════════════════════════════════
 # FINALIZAÇÃO
 # ══════════════════════════════════════════════════════════
-echo -e "\n${GREEN}${BOLD}══════════════════════════════════════${NC}"
-echo -e "${GREEN}${BOLD}  ✓ Instalação concluída!${NC}"
-echo -e "${GREEN}${BOLD}══════════════════════════════════════${NC}\n"
+echo -e "\n${PURPLE}${BOLD}"
+cat <<'EOF'
+  ██╗ ██████╗  █████╗ ██╗
+  ██║██╔════╝ ██╔══██╗██║
+  ██║██║  ███╗███████║██║
+  ██║██║   ██║██╔══██║██║
+  ██║╚██████╔╝██║  ██║███████╗
+  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝
+EOF
+echo -e "${NC}"
+echo -e "${GREEN}${BOLD}  ✓ IrajuArch OS instalado com sucesso!${NC}\n"
 echo -e "${YELLOW}  Próximos passos:${NC}"
-echo -e "  1. Reinicie o sistema: ${CYAN}reboot${NC}"
-echo -e "  2. Adicione wallpapers em ${CYAN}~/Wallpapers/{manha,tarde,noite,madrugada}${NC}"
-echo -e "  3. Autentique o Google Calendar: ${CYAN}vdirsyncer discover${NC}"
-echo -e "  4. Faça login no GitHub CLI: ${CYAN}gh auth login${NC}\n"
+echo -e "  1. Reinicie o sistema:       ${CYAN}reboot${NC}"
+echo -e "  2. Adicione wallpapers em:   ${CYAN}~/Wallpapers/{manha,tarde,noite,madrugada}${NC}"
+echo -e "  3. Google Calendar:          ${CYAN}vdirsyncer discover && vdirsyncer sync${NC}"
+echo -e "  4. GitHub CLI:               ${CYAN}gh auth login${NC}\n"
