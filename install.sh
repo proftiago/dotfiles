@@ -117,7 +117,7 @@ PACMAN_PKGS=(
 
     # Qt / GTK
     adw-gtk-theme gnome-themes-extra breeze qt5-graphicaleffects qt6-5compat
-    papirus-icon-theme gradience
+    papirus-icon-theme
 
     # Ícones
     papirus-icon-theme
@@ -127,6 +127,7 @@ PACMAN_PKGS=(
 )
 
 AUR_PKGS=(
+    gradience
     yay-debug
     swayosd-git
     matugen
