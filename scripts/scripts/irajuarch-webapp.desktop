@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Name=WebApp Creator
+GenericName=Criar WebApps
+Comment=Cria e gerencia webapps — IrajuArch OS
+Exec=/home/tiago/scripts/webapp.sh
+Icon=/home/tiago/.local/share/icons/irajuarch-webapp.png
+Terminal=false
+Type=Application
+Categories=Network;Utility;
+Keywords=webapp;web;app;criar;
+StartupWMClass=webapp-creator

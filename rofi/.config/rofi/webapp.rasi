@@ -1,0 +1,113 @@
+configuration {
+  font:            "JetBrainsMono Nerd Font 13";
+  show-icons:      false;
+  hover-select:    true;
+  me-select-entry: "";
+  me-accept-entry: "MousePrimary";
+}
+
+@theme "/dev/null"
+@import "/home/tiago/.config/rofi/colors.rasi"
+
+window {
+  background-color: @bg;
+  border:           2px solid;
+  border-color:     @accent;
+  border-radius:    22px;
+  width:            480px;
+  padding:          28px;
+  location:         center;
+  anchor:           center;
+  opacity:          0.95;
+}
+
+mainbox {
+  background-color: transparent;
+  spacing:          16px;
+  children:         [inputbar, message, listview];
+}
+
+/* ── Header / Prompt ── */
+inputbar {
+  background-color: @bg-alt;
+  border-radius:    14px;
+  padding:          14px 20px;
+  children:         [prompt, entry];
+}
+
+prompt {
+  background-color: transparent;
+  text-color:       @accent;
+  font:             "JetBrainsMono Nerd Font Bold 15";
+  horizontal-align: 0.0;
+  vertical-align:   0.5;
+  margin:           0 10px 0 0;
+}
+
+entry {
+  background-color: transparent;
+  text-color:       @fg;
+  placeholder:      "Digite aqui...";
+  placeholder-color: @bg-high;
+  cursor:           text;
+  horizontal-align: 0.0;
+  vertical-align:   0.5;
+  expand:           true;
+}
+
+/* ── Mensagem subtitle ── */
+message {
+  background-color: transparent;
+  padding:          0 4px;
+}
+
+textbox {
+  background-color: transparent;
+  text-color:       @fg-alt;
+  font:             "JetBrainsMono Nerd Font 11";
+  horizontal-align: 0.5;
+}
+
+/* ── Lista ── */
+listview {
+  background-color: transparent;
+  columns:          1;
+  lines:            6;
+  spacing:          8px;
+  scrollbar:        false;
+  cycle:            true;
+  dynamic:          true;
+}
+
+element {
+  background-color: @bg-alt;
+  border-radius:    12px;
+  padding:          14px 20px;
+  orientation:      horizontal;
+  spacing:          14px;
+  cursor:           pointer;
+}
+
+element normal.normal {
+  background-color: @bg-alt;
+  text-color:       @fg;
+}
+
+element selected.normal {
+  background-color: @accent;
+  text-color:       @on-accent;
+}
+
+element alternate.normal {
+  background-color: @bg-high;
+  text-color:       @fg-alt;
+}
+
+element-text {
+  background-color: transparent;
+  text-color:       inherit;
+  horizontal-align: 0.0;
+  vertical-align:   0.5;
+  font:             "JetBrainsMono Nerd Font 13";
+  expand:           true;
+}
