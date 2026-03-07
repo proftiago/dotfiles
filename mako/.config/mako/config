@@ -6,9 +6,9 @@ padding=16
 border-size=1
 border-radius=14
 background-color=#0e1514cc
-border-color=#89939240
-text-color=#dde4e3
-progress-color=over #80d4d540
+border-color=#89939140
+text-color=#dde4e2
+progress-color=over #81d5cc40
 font=JetBrainsMono Nerd Font 11
 default-timeout=5000
 ignore-timeout=0
@@ -19,14 +19,14 @@ max-icon-size=48
 
 [urgency=low]
 background-color=#0e1514bb
-border-color=#89939225
-text-color=#bec8c8
+border-color=#89939125
+text-color=#bec9c6
 default-timeout=3000
 
 [urgency=normal]
 background-color=#0e1514cc
-border-color=#89939240
-text-color=#dde4e3
+border-color=#89939140
+text-color=#dde4e2
 default-timeout=5000
 
 [urgency=critical]
