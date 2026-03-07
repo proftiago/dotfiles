@@ -51,6 +51,41 @@ echo -e "${YELLOW}  Cada etapa pergunta antes de executar.\n${NC}"
 sleep 1
 
 # ══════════════════════════════════════════════════════════
+# VERIFICAÇÃO DE RAM E SWAP
+# ══════════════════════════════════════════════════════════
+title "0. Verificação de Sistema"
+
+TOTAL_RAM=$(free -m | awk '/^Mem:/{print $2}')
+TOTAL_SWAP=$(free -m | awk '/^Swap:/{print $2}')
+TOTAL_MEM=$((TOTAL_RAM + TOTAL_SWAP))
+
+info "RAM disponível: ${TOTAL_RAM}MB"
+info "Swap disponível: ${TOTAL_SWAP}MB"
+info "Total (RAM + Swap): ${TOTAL_MEM}MB"
+
+if [ "$TOTAL_MEM" -lt 3072 ]; then
+    warn "Memória total insuficiente para compilar pacotes Rust (mínimo 3GB)."
+
+    if ask "Criar swapfile de 3GB automaticamente?"; then
+        if [ -f /swapfile ]; then
+            warn "Swapfile já existe, pulando criação."
+        else
+            info "Criando swapfile de 3GB..."
+            sudo fallocate -l 3G /swapfile
+            sudo chmod 600 /swapfile
+            sudo mkswap /swapfile
+            sudo swapon /swapfile
+            echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+            success "Swapfile criado e ativado (persistente)"
+        fi
+    else
+        warn "Continuando sem swap — pacotes Rust como swayosd-git podem falhar."
+    fi
+else
+    success "Memória suficiente para instalação completa"
+fi
+
+# ══════════════════════════════════════════════════════════
 # ETAPA 1 — AUR HELPER
 # ══════════════════════════════════════════════════════════
 title "1. AUR Helper"
