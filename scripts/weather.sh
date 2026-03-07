@@ -1,0 +1,1 @@
+../dotfiles/scripts/scripts/weather.sh

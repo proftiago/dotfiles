@@ -1,0 +1,1 @@
+../../dotfiles/hyprland/.config/hypr/set-random-wallpaper.sh

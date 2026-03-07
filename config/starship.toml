@@ -1,0 +1,95 @@
+# ╔══════════════════════════════════════════════════╗
+# ║         STARSHIP — TIAGO CONFIGURAÇÃO            ║
+# ║         Arch Linux · Fish · Hyprland             ║
+# ╚══════════════════════════════════════════════════╝
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+$os\
+$directory\
+$git_branch\
+$git_status\
+$python\
+$lua\
+$nodejs\
+$fill\
+$time\
+$line_break\
+$character"""
+
+# ── Geral ─────────────────────────────────────────
+add_newline = true
+
+# ── OS icon ───────────────────────────────────────
+[os]
+disabled = false
+style = "bold blue"
+
+[os.symbols]
+Arch = " "
+
+# ── Diretório ─────────────────────────────────────
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold cyan"
+read_only = " 󰌾"
+read_only_style = "red"
+format = "[ $path]($style)[$read_only]($read_only_style) "
+fish_style_pwd_dir_length = 1
+
+# ── Git branch ────────────────────────────────────
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = "[$symbol$branch]($style) "
+truncation_length = 20
+
+# ── Git status ────────────────────────────────────
+[git_status]
+style = "bold red"
+format = '([$all_status$ahead_behind]($style) )'
+conflicted = "󰩌 "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕ "
+untracked = "? "
+modified = "! "
+staged = "+ "
+deleted = "✘ "
+
+# ── Linguagens ────────────────────────────────────
+[python]
+symbol = " "
+style = "bold yellow"
+format = '[$symbol$version]($style) '
+detect_files = ["*.py", "requirements.txt", ".python-version"]
+
+[lua]
+symbol = " "
+style = "bold blue"
+format = '[$symbol$version]($style) '
+
+[nodejs]
+symbol = " "
+style = "bold green"
+format = '[$symbol$version]($style) '
+detect_files = ["package.json", ".nvmrc"]
+
+# ── Fill (empurra o horário para a direita) ───────
+[fill]
+symbol = " "
+
+# ── Horário (direita) ─────────────────────────────
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "bold dimmed white"
+format = '[ $time]($style)'
+
+# ── Prompt ────────────────────────────────────────
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold purple)"
