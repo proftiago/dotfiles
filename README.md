@@ -1,6 +1,6 @@
 <div align="center">
 
-# 󰣇 IrajubArch/OS
+# 󰣇 IrajuArch OS
 
 **Arch Linux · Hyprland · Wayland**
 
@@ -14,6 +14,27 @@
 
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+
+![](assets/screenshot1.png)
+
+<table>
+  <tr>
+    <td><img src="assets/screenshot2.png"/></td>
+    <td><img src="assets/screenshot3.png"/></td>
+  </tr>
+  <tr>
+    <td><img src="assets/screenshot4.png"/></td>
+    <td><img src="assets/screenshot5.png"/></td>
+  </tr>
+</table>
+
+</div>
+
+---
+
 ## ✨ Destaques
 
 - 🎨 **Cores dinâmicas** — o sistema inteiro muda de cor com o wallpaper via Matugen
@@ -22,6 +43,7 @@
 - 🌤 **Widget de clima** — temperatura do Rio de Janeiro em tempo real
 - 📅 **Google Calendar integrado** — notificações de aulas 15min antes com link do Meet
 - 💾 **Backup automático** — dotfiles sincronizados no GitHub todo dia
+- 󰖟 **WebApp Creator** — cria webapps com ícone via interface Rofi
 - ⚡ **Boot animado** — Plymouth com tema Arch
 
 ---
@@ -37,19 +59,14 @@
 | **Mako** | Notificações com glass effect e cores dinâmicas |
 | **Neovim** | Editor com LazyVim, LSP para 5 linguagens e tema dinâmico |
 | **Fish** | Shell com Starship prompt — ícone Arch, git status, horário |
+| **Fastfetch** | System info com logo Arch e clima do Rio |
 | **Matugen** | Gerador de paleta de cores a partir do wallpaper (Material You) |
 | **swww** | Troca de wallpaper com animações suaves |
-| **Scripts** | wallpaper-time, weather, dotfiles-backup, calendar, powermenu |
+| **Scripts** | wallpaper-time, weather, dotfiles-backup, calendar, webapp |
 
 ---
 
 ## 🚀 Instalação
-
-### Pré-requisitos
-
-- Arch Linux instalado (base system)
-- Conexão com internet
-- Conta no GitHub
 
 ### Instalação completa (recomendado)
 
@@ -59,21 +76,21 @@ cd ~/dotfiles
 bash install.sh
 ```
 
-O `install.sh` é **interativo** — pergunta antes de cada etapa e instala tudo automaticamente:
+O `install.sh` é **interativo** com menu de 4 modos:
 
-- ✅ Pacotes via pacman e AUR (yay)
-- ✅ Dotfiles aplicados com GNU Stow
-- ✅ Serviços systemd ativados
-- ✅ Fish definido como shell padrão
-- ✅ Fontes e cache atualizados
-- ✅ Git configurado
+| Modo | Descrição |
+|---|---|
+| **Full Install** | Instala tudo do zero |
+| **Minimal** | Só base + dotfiles + serviços |
+| **Update** | Atualiza dotfiles e reinicia serviços |
+| **Wallpapers** | Só baixa wallpapers do ML4W |
 
 ### Instalação manual (só dotfiles)
 
 ```bash
 git clone https://github.com/proftiago/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow hyprland waybar kitty rofi mako nvim fish scripts
+stow hyprland waybar kitty rofi mako nvim fish scripts fastfetch
 ```
 
 ---
@@ -89,12 +106,12 @@ dotfiles/
 ├── mako/             # ~/.config/mako/
 ├── nvim/             # ~/.config/nvim/
 ├── fish/             # ~/.config/fish/
+├── fastfetch/        # ~/.config/fastfetch/
 ├── scripts/          # ~/scripts/
+├── assets/           # Screenshots
 ├── install.sh        # Script de instalação interativo
 └── README.md
 ```
-
-Cada pasta é um pacote [GNU Stow](https://www.gnu.org/software/stow/) — ao rodar `stow <pasta>` ele cria symlinks automáticos em `~/.config/`, mantendo os arquivos reais sempre dentro do repo.
 
 ---
 
@@ -114,26 +131,28 @@ Cada pasta é um pacote [GNU Stow](https://www.gnu.org/software/stow/) — ao ro
 | `SUPER + Escape` | Power menu |
 | `SUPER + /` | Ver todos os keybinds |
 | `SUPER + 1-5` | Muda de workspace |
+| `Print` | Screenshot tela inteira |
+| `SHIFT + Print` | Screenshot de área |
+| `CTRL + Print` | Screenshot para clipboard |
 
 ---
 
 ## 📅 Pós-instalação
 
-Após rodar o `install.sh`, configure:
-
 ```bash
 # 1. Google Calendar
-vdirsyncer discover
-vdirsyncer sync
+vdirsyncer discover && vdirsyncer sync
 
 # 2. GitHub CLI
 gh auth login
 
-# 3. Adicione wallpapers por período
+# 3. Wallpapers por horário
 mkdir -p ~/Wallpapers/{manha,tarde,noite,madrugada}
-# Coloque suas imagens em cada pasta
 
-# 4. Reinicie
+# 4. WebApp Creator
+~/scripts/webapp.sh
+
+# 5. Reinicie
 reboot
 ```
 
