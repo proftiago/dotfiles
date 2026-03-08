@@ -497,7 +497,14 @@ class IrajuInstaller(Gtk.Window):
             self._run("sudo pacman -S --needed base-devel git --noconfirm")
             self._run("git clone https://aur.archlinux.org/yay.git /tmp/yay && cd /tmp/yay && makepkg -si --noconfirm")
 
+    def _ensure_sudo(self):
+        self._log("→ Solicitando permissão sudo uma vez...")
+        subprocess.run("sudo -v", shell=True)
+        # Mantém sudo ativo em background
+        subprocess.Popen("while true; do sudo -n true; sleep 50; done 2>/dev/null &", shell=True)
+
     def _do_install(self, components):
+        self._ensure_sudo()
         self._ensure_yay()
         self._ensure_dotfiles()
 
@@ -512,7 +519,7 @@ class IrajuInstaller(Gtk.Window):
             )
 
         self._run(
-            f"cd {DOTFILES_DIR} && stow -v stow/*",
+            f"cd {DOTFILES_DIR}/stow && stow -v -t $HOME */",
             self.s("stowing")
         )
 
@@ -530,9 +537,10 @@ class IrajuInstaller(Gtk.Window):
         self._run(f"bash {DOTFILES_DIR}/welcome.sh &", "Launching welcome screen...")
 
     def _do_update(self):
+        self._ensure_sudo()
         self._ensure_dotfiles()
         self._run(
-            f"cd {DOTFILES_DIR} && stow -v --restow stow/*",
+            f"cd {DOTFILES_DIR}/stow && stow -v --restow -t $HOME */",
             self.s("update_msg")
         )
 
