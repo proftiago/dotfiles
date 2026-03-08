@@ -47,7 +47,7 @@ echo -e "  2. Clonar o repositório de dotfiles"
 echo -e "  3. Abrir o instalador gráfico GTK\n"
 echo -e "  ${RED}⚠️  Requer internet e um sistema Arch-based${RESET}\n"
 
-read -rp "  Continuar? [s/N] " confirm
+read -rp "  Continuar? [s/N] " confirm </dev/tty
 [[ "$confirm" =~ ^[sS]$ ]] || {
     echo "Abortado."
     exit 0
