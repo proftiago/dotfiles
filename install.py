@@ -486,10 +486,11 @@ class IrajuInstaller(Gtk.Window):
             raise RuntimeError(f"Command failed: {cmd}")
 
     def _ensure_dotfiles(self):
+        env = "GIT_TERMINAL_PROMPT=0"
         if not os.path.isdir(DOTFILES_DIR):
-            self._run(f"git clone {DOTFILES_REPO} {DOTFILES_DIR}", self.s("cloning"))
+            self._run(f"{env} git clone {DOTFILES_REPO} {DOTFILES_DIR}", self.s("cloning"))
         else:
-            self._run(f"git -C {DOTFILES_DIR} pull", "Updating dotfiles repo...")
+            self._run(f"{env} git -C {DOTFILES_DIR} pull || true", "Updating dotfiles repo...")
 
     def _ensure_yay(self):
         if subprocess.run("command -v yay", shell=True, capture_output=True).returncode != 0:
