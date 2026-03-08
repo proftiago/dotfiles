@@ -1,12 +1,12 @@
 * {
-  bg:        #0e1416;
-  bg-alt:    #3f484b;
-  bg-high:   #334a50;
-  fg:        #dee3e5;
-  fg-alt:    #bfc8cb;
-  accent:    #83d2e4;
-  accent2:   #b2cbd1;
-  accent3:   #bdc5eb;
-  on-accent: #00363f;
+  bg:        #18120c;
+  bg-alt:    #504539;
+  bg-high:   #57432b;
+  fg:        #eee0d4;
+  fg-alt:    #d4c4b5;
+  accent:    #f7bb70;
+  accent2:   #dfc2a2;
+  accent3:   #bacd9f;
+  on-accent: #462a00;
   urgent:    #ffb4ab;
 }
