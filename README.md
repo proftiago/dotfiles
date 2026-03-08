@@ -125,5 +125,3 @@ stow -v --restow stow/*
 **proftiago** — Professor de idiomas e entusiasta Arch Linux do Rio de Janeiro 🇧🇷
 
 ---
-
-*IrajuArch OS — feito com 󰋙 no Rio de Janeiro*
