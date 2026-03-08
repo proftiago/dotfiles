@@ -525,7 +525,8 @@ class IrajuInstaller(Gtk.Window):
 
         # Post-install steps
         if "sddm" in components:
-            self._run("sudo systemctl enable sddm", "Enabling SDDM...")
+            self._run("sudo systemctl disable --now plasmalogin gdm lightdm lxdm 2>/dev/null || true", "Disabling existing display manager...")
+            self._run("sudo systemctl enable --force sddm", "Enabling SDDM...")
         if "plymouth" in components:
             self._run("sudo mkinitcpio -P", "Rebuilding initramfs...")
         if "hyprlock" in components:
