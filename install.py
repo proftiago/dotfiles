@@ -556,11 +556,12 @@ class IrajuInstaller(Gtk.Window):
 
     def _do_wallpapers(self):
         self._log(self.s("wallpapers_msg"))
+        env = "GIT_TERMINAL_PROMPT=0"
         os.makedirs(WALLPAPERS_DIR, exist_ok=True)
         if not os.path.isdir(os.path.join(WALLPAPERS_DIR, ".git")):
-            self._run(f"git clone {WALLPAPERS_REPO} {WALLPAPERS_DIR}")
+            self._run(f"{env} git clone {WALLPAPERS_REPO} {WALLPAPERS_DIR} || true")
         else:
-            self._run(f"git -C {WALLPAPERS_DIR} pull")
+            self._run(f"{env} git -C {WALLPAPERS_DIR} pull || true")
 
 
 if __name__ == "__main__":
