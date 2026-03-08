@@ -1,165 +1,129 @@
-<div align="center">
+# 󰣇 IrajuArch OS — Dotfiles
 
-# 󰣇 IrajuArch OS
+> Arch Linux · Hyprland · Wayland · by proftiago
 
-**Arch Linux · Hyprland · Wayland**
-
-*A clean, dynamic and modern desktop environment built for productivity and aesthetics.*
-
-[![Arch Linux](https://img.shields.io/badge/Arch_Linux-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)](https://archlinux.org)
-[![Hyprland](https://img.shields.io/badge/Hyprland-58E1FF?style=for-the-badge&logo=hyprland&logoColor=black)](https://hyprland.org)
-[![License](https://img.shields.io/badge/License-MIT-a6e3a1?style=for-the-badge)](LICENSE)
-
-</div>
+![Arch Linux](https://img.shields.io/badge/Arch_Linux-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)
+![Hyprland](https://img.shields.io/badge/Hyprland-58E1FF?style=for-the-badge&logo=wayland&logoColor=black)
+![CachyOS](https://img.shields.io/badge/CachyOS-compatible-blue?style=for-the-badge)
+![EndeavourOS](https://img.shields.io/badge/EndeavourOS-compatible-purple?style=for-the-badge)
 
 ---
 
-## 📸 Screenshots
+## ✨ Sobre
 
-<div align="center">
+IrajuArch é um desktop **macOS-inspired** construído sobre Arch Linux com Hyprland e Wayland.  
+Temas dinâmicos gerados automaticamente a partir do wallpaper via **Matugen**, visual coeso em todo o sistema.
 
-![](assets/screenshot1.png)
-
-<table>
-  <tr>
-    <td><img src="assets/screenshot2.png"/></td>
-    <td><img src="assets/screenshot3.png"/></td>
-  </tr>
-  <tr>
-    <td><img src="assets/screenshot4.png"/></td>
-    <td><img src="assets/screenshot5.png"/></td>
-  </tr>
-</table>
-
-</div>
+Compatível com:
+- 🟣 **EndeavourOS**
+- ⚡ **CachyOS**
+- 󰣇 **Arch Linux** (instalação manual)
 
 ---
 
-## ✨ Destaques
+## 🚀 Instalação — Um comando
 
-- 🎨 **Cores dinâmicas** — o sistema inteiro muda de cor com o wallpaper via Matugen
-- 🕐 **Wallpaper por horário** — troca automático às 6h, 12h, 18h e 22h
-- 🎵 **Widget de música** — controles prev/play/next diretamente na barra
-- 🌤 **Widget de clima** — temperatura do Rio de Janeiro em tempo real
-- 📅 **Google Calendar integrado** — notificações de aulas 15min antes com link do Meet
-- 💾 **Backup automático** — dotfiles sincronizados no GitHub todo dia
-- 󰖟 **WebApp Creator** — cria webapps com ícone via interface Rofi
-- ⚡ **Boot animado** — Plymouth com tema Arch
+Abra um terminal após fazer login no desktop e rode:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/proftiago/dotfiles/main/bootstrap.sh | bash
+```
+
+Isso irá:
+1. Verificar compatibilidade do sistema
+2. Instalar `git`, `python`, `gtk3`, `stow` e `yay`
+3. Clonar este repositório
+4. Abrir o **instalador gráfico GTK**
+
+> ⚠️ Execute após estar logado no desktop gráfico (não funciona no TTY puro).
+
+---
+
+## 🖥️ Instalador Gráfico
+
+O instalador permite escolher:
+
+| Modo | Descrição |
+|------|-----------|
+| **Instalação Completa** | Instala todos os componentes |
+| **Modular** | Escolha componente por componente |
+| **Atualizar Dotfiles** | Só atualiza configs existentes |
+| **Wallpapers** | Instala a coleção de wallpapers |
 
 ---
 
 ## 🧩 Componentes
 
 | Componente | Descrição |
-|---|---|
-| **Hyprland** | Compositor Wayland com animações, blur e bordas dinâmicas |
-| **Waybar** | Barra em 3 ilhas — workspaces · música+relógio+clima · hardware |
-| **Kitty** | Terminal com transparência, JetBrainsMono e Fish shell |
-| **Rofi** | Launcher, power menu, keybinds viewer e configs viewer |
-| **Mako** | Notificações com glass effect e cores dinâmicas |
-| **Neovim** | Editor com LazyVim, LSP para 5 linguagens e tema dinâmico |
-| **Fish** | Shell com Starship prompt — ícone Arch, git status, horário |
-| **Fastfetch** | System info com logo Arch e clima do Rio |
-| **Matugen** | Gerador de paleta de cores a partir do wallpaper (Material You) |
-| **swww** | Troca de wallpaper com animações suaves |
-| **Scripts** | wallpaper-time, weather, dotfiles-backup, calendar, webapp |
-
----
-
-## 🚀 Instalação
-
-### Instalação completa (recomendado)
-
-```bash
-git clone https://github.com/proftiago/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-bash install.sh
-```
-
-O `install.sh` é **interativo** com menu de 4 modos:
-
-| Modo | Descrição |
-|---|---|
-| **Full Install** | Instala tudo do zero |
-| **Minimal** | Só base + dotfiles + serviços |
-| **Update** | Atualiza dotfiles e reinicia serviços |
-| **Wallpapers** | Só baixa wallpapers do ML4W |
-
-### Instalação manual (só dotfiles)
-
-```bash
-git clone https://github.com/proftiago/dotfiles.git ~/dotfiles
-cd ~/dotfiles
-stow hyprland waybar kitty rofi mako nvim fish scripts fastfetch
-```
-
----
-
-## 📁 Estrutura do Repositório
-
-```
-dotfiles/
-├── hyprland/         # ~/.config/hypr/
-├── waybar/           # ~/.config/waybar/
-├── kitty/            # ~/.config/kitty/
-├── rofi/             # ~/.config/rofi/
-├── mako/             # ~/.config/mako/
-├── nvim/             # ~/.config/nvim/
-├── fish/             # ~/.config/fish/
-├── fastfetch/        # ~/.config/fastfetch/
-├── scripts/          # ~/scripts/
-├── assets/           # Screenshots
-├── install.sh        # Script de instalação interativo
-└── README.md
-```
+|------------|-----------|
+| Hyprland | Window manager · blur · animações · bordas dinâmicas |
+| Waybar | Barra com 3 ilhas · música · clima · hardware |
+| Kitty + Fish | Terminal com cores dinâmicas |
+| Rofi | Launcher · power menu · keybinds viewer |
+| Mako | Notificações com glass effect |
+| Neovim + LazyVim | Editor com LSP para 5 linguagens |
+| SDDM | Login manager com tema customizado |
+| Plymouth | Boot splash animado com logo Arch |
+| Hyprlock + Hypridle | Tela de bloqueio + idle timeout |
+| SwayOSD | OSD de volume e brilho temático |
+| btop | Monitor de sistema flutuante |
+| Fastfetch | System info com logo Arch |
+| Matugen v4 | Cores dinâmicas para todo o sistema |
 
 ---
 
 ## ⌨️ Atalhos principais
 
-| Tecla | Ação |
-|---|---|
-| `SUPER + Enter` | Abre o terminal (Kitty) |
-| `SUPER + Space` | Launcher (Rofi) |
-| `SUPER + E` | Browser (Chrome) |
-| `SUPER + A` | File manager (Yazi) |
-| `SUPER + W` | Troca wallpaper aleatório |
-| `SUPER + B` | Gerenciador Bluetooth |
-| `SUPER + Q` | Fecha a janela |
-| `SUPER + F` | Fullscreen |
-| `SUPER + V` | Floating toggle |
-| `SUPER + Escape` | Power menu |
-| `SUPER + /` | Ver todos os keybinds |
-| `SUPER + 1-5` | Muda de workspace |
-| `Print` | Screenshot tela inteira |
+| Atalho | Ação |
+|--------|------|
+| `SUPER + Enter` | Terminal (Kitty) |
+| `SUPER + Space` | App Launcher (Rofi) |
+| `SUPER + W` | Trocar wallpaper |
+| `SUPER + K` | Ver todos os atalhos |
+| `SUPER + T` | Monitor do sistema (btop) |
+| `SUPER + P` | Color Picker |
+| `SUPER + Y` | Clipboard (histórico) |
+| `SUPER + Escape` | Power Menu |
+| `Print` | Screenshot completa |
 | `SHIFT + Print` | Screenshot de área |
-| `CTRL + Print` | Screenshot para clipboard |
 
 ---
 
-## 📅 Pós-instalação
+## 📁 Estrutura
 
-```bash
-# 1. Google Calendar
-vdirsyncer discover && vdirsyncer sync
-
-# 2. GitHub CLI
-gh auth login
-
-# 3. Wallpapers por horário
-mkdir -p ~/Wallpapers/{manha,tarde,noite,madrugada}
-
-# 4. WebApp Creator
-~/scripts/webapp.sh
-
-# 5. Reinicie
-reboot
+```
+dotfiles/
+├── bootstrap.sh       ← Instalar do zero (curl | bash)
+├── install.py         ← Instalador gráfico GTK
+├── welcome.py         ← App de boas-vindas (primeira vez)
+├── stow/
+│   ├── hypr/
+│   ├── waybar/
+│   ├── kitty/
+│   ├── rofi/
+│   ├── mako/
+│   ├── nvim/
+│   └── scripts/
+└── docs/
+    └── sudoers-wallpaper.txt
 ```
 
 ---
 
-<div align="center">
+## 🔄 Atualizar dotfiles manualmente
 
-Feito com ♥ no Rio de Janeiro 🇧🇷
+```bash
+cd ~/dotfiles
+git pull
+stow -v --restow stow/*
+```
 
-</div>
+---
+
+## 👤 Autor
+
+**proftiago** — Professor de idiomas e entusiasta Arch Linux do Rio de Janeiro 🇧🇷
+
+---
+
+*IrajuArch OS — feito com 󰋙 no Rio de Janeiro*
