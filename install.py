@@ -519,8 +519,12 @@ class IrajuInstaller(Gtk.Window):
             )
 
         self._run(
-            f"cd {DOTFILES_DIR}/stow && stow -v -t $HOME */",
+            f"cd {DOTFILES_DIR} && stow -v -t $HOME hyprland kitty rofi mako waybar fish nvim config 2>/dev/null || true",
             self.s("stowing")
+        )
+        self._run(
+            f"cd {DOTFILES_DIR}/stow && stow -v -t $HOME scripts swayosd 2>/dev/null || true",
+            "Applying stow extras..."
         )
 
         # Post-install steps
@@ -541,8 +545,12 @@ class IrajuInstaller(Gtk.Window):
         self._ensure_sudo()
         self._ensure_dotfiles()
         self._run(
-            f"cd {DOTFILES_DIR}/stow && stow -v --restow -t $HOME */",
+            f"cd {DOTFILES_DIR} && stow -v --restow -t $HOME hyprland kitty rofi mako waybar fish nvim config 2>/dev/null || true",
             self.s("update_msg")
+        )
+        self._run(
+            f"cd {DOTFILES_DIR}/stow && stow -v --restow -t $HOME scripts swayosd 2>/dev/null || true",
+            "Restowing extras..."
         )
 
     def _do_wallpapers(self):
