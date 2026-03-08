@@ -95,7 +95,7 @@ PACKAGES = {
 
 DOTFILES_REPO = "https://github.com/proftiago/dotfiles"
 DOTFILES_DIR  = os.path.expanduser("~/dotfiles")
-WALLPAPERS_REPO = "https://github.com/proftiago/wallpapers"
+WALLPAPERS_REPO = "https://github.com/mylinuxforwork/wallpaper.git"
 WALLPAPERS_DIR  = os.path.expanduser("~/Pictures/wallpapers")
 
 CSS = b"""
@@ -540,7 +540,7 @@ class IrajuInstaller(Gtk.Window):
         self._do_wallpapers()
 
         # Launch welcome on first run
-        self._run(f"bash {DOTFILES_DIR}/welcome.sh &", "Launching welcome screen...")
+        self._run(f"python {DOTFILES_DIR}/welcome.py &", "Launching welcome screen...")
 
     def _do_update(self):
         self._ensure_sudo()
