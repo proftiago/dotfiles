@@ -7,7 +7,7 @@
 
 set -e
 
-REPO="https://github.com/proftiago/dotfiles"
+REPO="https://github.com/proftiago/dotfiles.git"
 RAW="https://raw.githubusercontent.com/proftiago/dotfiles/main"
 DOTFILES_DIR="$HOME/dotfiles"
 
@@ -19,18 +19,15 @@ PURPLE='\033[0;35m'
 RESET='\033[0m'
 BOLD='\033[1m'
 
-log() { echo -e "${CYAN}→ $1${RESET}"; }
+log()     { echo -e "${CYAN}→ $1${RESET}"; }
 success() { echo -e "${GREEN}✅ $1${RESET}"; }
-error() {
-    echo -e "${RED}❌ $1${RESET}"
-    exit 1
-}
-title() { echo -e "\n${PURPLE}${BOLD}$1${RESET}\n"; }
+error()   { echo -e "${RED}❌ $1${RESET}"; exit 1; }
+title()   { echo -e "\n${PURPLE}${BOLD}$1${RESET}\n"; }
 
 # ── Banner ─────────────────────────────────────────
 clear
 echo -e "${PURPLE}${BOLD}"
-cat <<'EOF'
+cat << 'EOF'
   ██╗██████╗  █████╗      ██╗██╗   ██╗ █████╗ ██████╗  ██████╗██╗  ██╗
   ██║██╔══██╗██╔══██╗     ██║██║   ██║██╔══██╗██╔══██╗██╔════╝██║  ██║
   ██║██████╔╝███████║     ██║██║   ██║███████║██████╔╝██║     ███████║
@@ -94,11 +91,14 @@ fi
 # ── 4. Clonar dotfiles ────────────────────────────
 title "󰊢 Clonando dotfiles..."
 
+git config --global credential.helper ""
+git config --global url."https://".insteadOf git://
+
 if [[ -d "$DOTFILES_DIR" ]]; then
     log "Repositório já existe, atualizando..."
     git -C "$DOTFILES_DIR" pull
 else
-    git clone "$REPO" "$DOTFILES_DIR"
+    GIT_TERMINAL_PROMPT=0 git clone "$REPO" "$DOTFILES_DIR"
 fi
 
 success "Dotfiles prontos em $DOTFILES_DIR"
