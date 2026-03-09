@@ -5,10 +5,10 @@ height=120
 padding=16
 border-size=1
 border-radius=14
-background-color=#1a110ecc
-border-color=#a08d8640
-text-color=#f1dfd9
-progress-color=over #ffb59840
+background-color=#19120dcc
+border-color=#9f8d8340
+text-color=#f0dfd6
+progress-color=over #ffb78540
 font=JetBrainsMono Nerd Font 11
 default-timeout=5000
 ignore-timeout=0
@@ -18,15 +18,15 @@ icon-path=/usr/share/icons/Papirus-Dark
 max-icon-size=48
 
 [urgency=low]
-background-color=#1a110ebb
-border-color=#a08d8625
-text-color=#d8c2ba
+background-color=#19120dbb
+border-color=#9f8d8325
+text-color=#d7c3b7
 default-timeout=3000
 
 [urgency=normal]
-background-color=#1a110ecc
-border-color=#a08d8640
-text-color=#f1dfd9
+background-color=#19120dcc
+border-color=#9f8d8340
+text-color=#f0dfd6
 default-timeout=5000
 
 [urgency=critical]
