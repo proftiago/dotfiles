@@ -16,3 +16,4 @@ alias ... "cd ../.."
 function fish_greeting
     echo "👋 Bem-vindo, Tiago! | $(date '+%d/%m %H:%M')"
 end
+set -gx PATH $PATH /opt/flutter/bin
