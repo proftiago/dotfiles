@@ -15,8 +15,7 @@ env = XDG_SESSION_TYPE,wayland
 env = XDG_SESSION_DESKTOP,Hyprland
 env = NIXOS_OZONE_WL,1
 env = ELECTRON_OZONE_PLATFORM_HINT,wayland
-env = XCURSOR_THEME, Bibata-Modern-Classic
-env = XCURSOR_SIZE, 24
+
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 #  AUTOSTART
@@ -80,19 +79,19 @@ decoration {
     active_opacity     = 0.92
     inactive_opacity   = 0.82
     fullscreen_opacity = 1.0
-    dim_around         = 0.6
+    dim_around         = 0.7
     dim_inactive       = false
     dim_strength       = 0.2
 
     blur {
         enabled           = true
-        size              = 8
-        passes            = 3
+        size              = 10
+        passes            = 4
         new_optimizations = true
         xray              = false
-        noise             = 0.02
-        contrast          = 1.0
-        brightness        = 0.9
+        noise             = 0.018
+        contrast          = 1.05
+        brightness        = 0.85
         vibrancy          = 0.25
         vibrancy_darkness = 0.1
     }
@@ -114,15 +113,12 @@ decoration {
 animations {
     enabled = yes
     bezier  = glass, 0.25, 0.9, 0.1, 1.0
-    bezier = smooth,    0.05, 0.9,  0.1,  1.05
-    bezier = snappy,    0.25, 0.46, 0.45, 0.94
-    bezier = overshot,  0.13, 0.99, 0.29, 1.1
 
-    animation = windows,    1, 5, smooth, popin 80%
-    animation = windowsOut, 1, 4, snappy, popin 80%
-    animation = fade,       1, 5, smooth
-    animation = workspaces, 1, 6, overshot, slidevert
-    animation = border,     1, 8, smooth
+    animation = windows,    1, 3, glass, popin 80%
+    animation = windowsOut, 1, 2, glass, popin 80%
+    animation = fade,       1, 2, glass
+    animation = workspaces, 1, 3, glass, slide
+    animation = border,     1, 4, glass
 }
 
 
@@ -218,12 +214,7 @@ windowrule2 = float on,          match:class kitty-dashboard
 windowrule2 = center on,         match:class kitty-dashboard
 windowrule2 = size 700 420,      match:class kitty-dashboard
 windowrule2 = animation popin,   match:class kitty-dashboard
-windowrule2 = float on,          match:class pavucontrol
-windowrule2 = float on,          match:class blueman-manager
-windowrule2 = float on,          match:class nm-connection-editor
-windowrule2 = center on,         match:class pavucontrol
-windowrule2 = center on,         match:class blueman-manager
-windowrule2 = size 700 450,      match:class pavucontrol
+
 
 # ── Layer rules ───────────────────────────────────
 layerrule = blur on,           match:namespace mako

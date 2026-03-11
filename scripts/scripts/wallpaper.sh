@@ -16,6 +16,9 @@ if [[ ! -f "$WALLPAPER" ]]; then
     exit 1
 fi
 echo "🖼️  Wallpaper: $WALLPAPER"
+# ── Salvar path para toggle de tema ───────────────
+mkdir -p "$HOME/.config/matugen"
+echo "$WALLPAPER" >"$HOME/.config/matugen/.wallpaper"
 # ── 1. Trocar wallpaper com transição suave ────────
 swww img "$WALLPAPER" \
     --transition-type grow \
@@ -25,7 +28,8 @@ swww img "$WALLPAPER" \
 # ── 2. Salvar wallpaper atual ──────────────────────
 echo "$WALLPAPER" >~/.current_wallpaper
 # ── 3. Gerar paleta de cores com matugen ──────────
-matugen image "$WALLPAPER" -m dark --source-color-index 0
+CURRENT_MODE=$(cat "$HOME/.config/matugen/.mode" 2>/dev/null || echo "dark")
+matugen image "$WALLPAPER" -m "$CURRENT_MODE" --source-color-index 0
 # ── 4. Aguardar matugen terminar ───────────────────
 sleep 0.5
 # ── 5. Recarregar terminais ────────────────────────
@@ -38,8 +42,13 @@ disown
 # ── 7. Recarregar Hyprland (bordas e cores) ────────
 hyprctl reload
 # ── 8. Atualizar tema GTK ─────────────────────────
-gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
+if [[ "$CURRENT_MODE" == "dark" ]]; then
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
+else
+    gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+    gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
+fi
 # ── 9. Atualizar wallpaper do SDDM ────────────────
 sudo convert "$WALLPAPER" /usr/share/sddm/themes/Apple.Tahoe/background.webp 2>/dev/null
 sudo cp "$WALLPAPER" /usr/share/backgrounds/background.jpg 2>/dev/null
@@ -79,11 +88,9 @@ papirus-folders -C "$FOLDER_COLOR" --theme Papirus-Dark 2>/dev/null
 echo "🎨 Papirus: $FOLDER_COLOR ($PRIMARY)"
 # ── 12. Atualizar tema SwayOSD ────────────────────
 SECONDARY=$(grep -oP '(?<=@define-color secondary\s{1,20})#[0-9a-fA-F]{6}' ~/.config/waybar/colors.css)
-# Converter PRIMARY hex → rgba para borda
 PR=$(printf '%d' 0x${PRIMARY:1:2})
 PG=$(printf '%d' 0x${PRIMARY:3:2})
 PB=$(printf '%d' 0x${PRIMARY:5:2})
-# Converter SECONDARY hex → rgba para gradiente
 SR=$(printf '%d' 0x${SECONDARY:1:2})
 SG=$(printf '%d' 0x${SECONDARY:3:2})
 SB=$(printf '%d' 0x${SECONDARY:5:2})
@@ -92,21 +99,21 @@ cat >~/.config/swayosd/style.css <<EOF
 window { background: transparent; }
 
 box {
-    background: rgba(0, 0, 0, 0.15);
+    background: #000000;
     border-radius: 16px;
-    border: 1px solid rgba(${PR}, ${PG}, ${PB}, 0.55);
+    border: none;
     padding: 16px 24px;
     min-width: 280px;
 }
 
 image {
-    color: ${PRIMARY};
+    color: #ffffff;
     margin-right: 12px;
 }
 
 progressbar > trough {
     border-radius: 99px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 progressbar > trough > progress {
@@ -116,7 +123,7 @@ progressbar > trough > progress {
 }
 
 label {
-    color: #cdd6f4;
+    color: #ffffff;
     font-family: "JetBrainsMono Nerd Font";
     font-size: 13px;
 }

@@ -2,8 +2,8 @@ configuration {
   modi:                "drun,run,window";
   show-icons:          true;
   icon-theme:          "Papirus-Dark";
-  font:                "JetBrainsMono Nerd Font 12";
-  display-drun:        "  Apps";
+  font:                "JetBrainsMono Nerd Font 10";
+  display-drun:        "  ";
   display-run:         "  Run";
   display-window:      "  Windows";
   drun-display-format: "{name}";
@@ -17,10 +17,10 @@ configuration {
 
 window {
   background-color: @bg;
-  border:           2px solid;
+  border:           0px solid;
   border-color:     @accent;
-  border-radius:    14px;
-  width:            520px;
+  border-radius:    25px;
+  width:            350px;
   padding:          12px;
 }
 
@@ -46,13 +46,13 @@ prompt {
 entry {
   background-color:  transparent;
   text-color:        @fg;
-  placeholder:       "Pesquisar...";
+  placeholder:       "";
   placeholder-color: @fg-alt;
 }
 
 listview {
   background-color: transparent;
-  lines:            8;
+  lines:            4;
   spacing:          4px;
   scrollbar:        false;
   cycle:            true;
@@ -77,5 +77,5 @@ element-text {
 
 element-icon {
   background-color: transparent;
-  size:             22px;
+  size:             20px;
 }

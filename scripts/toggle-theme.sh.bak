@@ -1,62 +1,68 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ╔══════════════════════════════════════════════════╗
-# ║         WALLPAPER — TIAGO CONFIGURAÇÃO           ║
-# ║         Uso: wallpaper.sh [imagem]               ║
-# ║         Sem argumento = aleatório                ║
+# ║         THEME TOGGLE — TIAGO CONFIGURAÇÃO        ║
+# ║         Alterna dark/light sem mudar wallpaper   ║
 # ╚══════════════════════════════════════════════════╝
-WALL_DIR="$HOME/Pictures/wallpapers"
-# ── Selecionar wallpaper ───────────────────────────
-if [[ -n "$1" ]]; then
-    WALLPAPER="$1"
-else
-    WALLPAPER=$(find "$WALL_DIR" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.webp" \) | shuf -n1)
+
+STATE_FILE="$HOME/.config/matugen/.mode"
+WALLPAPER=$(cat "$HOME/.config/matugen/.wallpaper" 2>/dev/null)
+
+# Fallback: pega wallpaper atual do swww
+if [[ -z "$WALLPAPER" ]]; then
+    WALLPAPER=$(swww query | awk -F'image: ' '{print $2}' | head -1)
 fi
+
 if [[ ! -f "$WALLPAPER" ]]; then
-    echo "❌ Arquivo não encontrado: $WALLPAPER"
+    echo "❌ Wallpaper não encontrado: $WALLPAPER"
     exit 1
 fi
-echo "🖼️  Wallpaper: $WALLPAPER"
-# ── Salvar path para toggle de tema ───────────────
-mkdir -p "$HOME/.config/matugen"
-echo "$WALLPAPER" >"$HOME/.config/matugen/.wallpaper"
-# ── 1. Trocar wallpaper com transição suave ────────
-swww img "$WALLPAPER" \
-    --transition-type grow \
-    --transition-pos 0.5,0.5 \
-    --transition-duration 1.2 \
-    --transition-fps 60
-# ── 2. Salvar wallpaper atual ──────────────────────
-echo "$WALLPAPER" >~/.current_wallpaper
-# ── 3. Gerar paleta de cores com matugen ──────────
-CURRENT_MODE=$(cat "$HOME/.config/matugen/.mode" 2>/dev/null || echo "dark")
-matugen image "$WALLPAPER" -m "$CURRENT_MODE" --source-color-index 0
-# ── 4. Aguardar matugen terminar ───────────────────
+
+# ── Lê modo atual e inverte ────────────────────────
+CURRENT=$(cat "$STATE_FILE" 2>/dev/null || echo "dark")
+if [[ "$CURRENT" == "dark" ]]; then
+    MODE="light"
+else
+    MODE="dark"
+fi
+echo "$MODE" >"$STATE_FILE"
+echo "🎨 Alternando para: $MODE"
+
+# ── 1. Gerar paleta de cores com matugen ──────────
+matugen image "$WALLPAPER" -m "$MODE" --source-color-index 0
+
+# ── 2. Aguardar matugen terminar ───────────────────
 sleep 0.5
-# ── 5. Recarregar terminais ────────────────────────
+
+# ── 3. Recarregar terminais ────────────────────────
 pkill -USR1 kitty 2>/dev/null
-# ── 6. Recarregar Waybar ───────────────────────────
+
+# ── 4. Recarregar Waybar ───────────────────────────
 pkill waybar
 sleep 0.3
 waybar &
 disown
-# ── 7. Recarregar Hyprland (bordas e cores) ────────
+
+# ── 5. Recarregar Hyprland (bordas e cores) ────────
 hyprctl reload
-# ── 8. Atualizar tema GTK ─────────────────────────
-if [[ "$CURRENT_MODE" == "dark" ]]; then
+
+# ── 6. Atualizar tema GTK ─────────────────────────
+if [[ "$MODE" == "dark" ]]; then
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3-dark'
 else
     gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
     gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
 fi
-# ── 9. Atualizar wallpaper do SDDM ────────────────
-sudo convert "$WALLPAPER" /usr/share/sddm/themes/Apple.Tahoe/background.webp 2>/dev/null
-sudo cp "$WALLPAPER" /usr/share/backgrounds/background.jpg 2>/dev/null
-# ── 10. Recarregar Neovim ─────────────────────────
+
+# ── 7. Recarregar Mako ────────────────────────────
+makoctl reload
+
+# ── 8. Recarregar Neovim ──────────────────────────
 for server in $(nvim --server-list 2>/dev/null); do
     nvim --server "$server" --remote-send ":colorscheme kanagawa<CR>" 2>/dev/null
 done
-# ── 11. Atualizar cor das pastas Papirus ───────────
+
+# ── 9. Atualizar cor das pastas Papirus ───────────
 PRIMARY=$(grep -oP '(?<=@define-color primary\s{1,20})#[0-9a-fA-F]{6}' ~/.config/waybar/colors.css)
 R=$(printf '%d' 0x${PRIMARY:1:2})
 G=$(printf '%d' 0x${PRIMARY:3:2})
@@ -86,13 +92,12 @@ else
 fi
 papirus-folders -C "$FOLDER_COLOR" --theme Papirus-Dark 2>/dev/null
 echo "🎨 Papirus: $FOLDER_COLOR ($PRIMARY)"
-# ── 12. Atualizar tema SwayOSD ────────────────────
+
+# ── 10. Atualizar tema SwayOSD ────────────────────
 SECONDARY=$(grep -oP '(?<=@define-color secondary\s{1,20})#[0-9a-fA-F]{6}' ~/.config/waybar/colors.css)
-# Converter PRIMARY hex → rgba para borda
 PR=$(printf '%d' 0x${PRIMARY:1:2})
 PG=$(printf '%d' 0x${PRIMARY:3:2})
 PB=$(printf '%d' 0x${PRIMARY:5:2})
-# Converter SECONDARY hex → rgba para gradiente
 SR=$(printf '%d' 0x${SECONDARY:1:2})
 SG=$(printf '%d' 0x${SECONDARY:3:2})
 SB=$(printf '%d' 0x${SECONDARY:5:2})
@@ -135,4 +140,7 @@ sleep 0.2
 swayosd-server &
 disown
 echo "🎨 SwayOSD: $PRIMARY → $SECONDARY"
-echo "✅ Tema aplicado com sucesso!"
+
+# ── Notificação ───────────────────────────────────
+notify-send "Theme Toggle" "Modo $MODE ativado" --icon=preferences-desktop-theme
+echo "✅ Tema $MODE aplicado com sucesso!"

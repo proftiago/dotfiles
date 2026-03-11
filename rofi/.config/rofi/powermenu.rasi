@@ -12,7 +12,7 @@ configuration {
 
 window {
   background-color: @bg;
-  border:           2px solid;
+  border:           0px solid;
   border-color:     @accent;
   border-radius:    22px;
   width:            420px;

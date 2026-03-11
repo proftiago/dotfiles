@@ -20,6 +20,7 @@ configuration {
 window {
   background-color: @bg;
   border:           0px solid;
+  border-color:     @accent;
   border-radius:    16px;
   width:            580px;
   padding:          8px;
@@ -105,4 +106,3 @@ element-text {
   vertical-align:   0.5;
   highlight:        @accent2;
 }
-
