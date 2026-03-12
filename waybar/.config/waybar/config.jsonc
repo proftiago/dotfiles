@@ -1,6 +1,6 @@
 // ╔══════════════════════════════════════════════════╗
-// ║         WAYBAR — TIAGO CONFIGURAÇÃO              ║
-// ║         Arch Linux · Intel UHD · Wayland         ║
+// ║     WAYBAR — MangoWC · TIAGO CONFIGURAÇÃO        ║
+// ║     IrajuArch OS · Intel UHD · Wayland           ║
 // ╚══════════════════════════════════════════════════╝
 
 {
@@ -12,33 +12,28 @@
     "margin-right": 8,
     "spacing": 2,
 
-    "modules-left":   ["hyprland/workspaces", "hyprland/window"],
+    "modules-left":   ["custom/tags", "wlr/taskbar"],
     "modules-center": ["group/music", "clock", "custom/weather"],
     "modules-right":  ["custom/updates", "custom/theme", "group/hardware", "group/audio", "battery", "tray", "custom/power"],
 
-    // ── Workspaces ─────────────────────────────────
-    "hyprland/workspaces": {
-        "disable-scroll": true,
-        "all-outputs": true,
-        "active-only": false,
-        "format": "{icon}",
-        "persistent-workspaces": { "*": 5 },
-        "format-icons": {
-            "1": "󰈹",
-            "2": "󰖟",
-            "3": "󰆍",
-            "4": "󰝚",
-            "5": "󱞁",
-            "active": "󰮯",
-            "default": "󰊠"
-        }
+    // ── Tags (= workspaces do MangoWC) ─────────────
+    // Script lê o estado via mmsg e renderiza os ícones
+    "custom/tags": {
+        "exec": "~/.config/waybar/scripts/mango-tags.sh",
+        "interval": 1,
+        "format": "{}",
+        "tooltip": false,
+        "on-click": ""
     },
 
-    // ── Título da janela ───────────────────────────
-    "hyprland/window": {
+    // ── Título da janela ativa ─────────────────────
+    "wlr/taskbar": {
+        "format": "{app_id}",
+        "icon-size": 0,
         "max-length": 35,
-        "separate-outputs": true,
-        "format": "  {title}"
+        "tooltip": false,
+        "on-click": "activate",
+        "ignore-list": []
     },
 
     // ── Relógio ────────────────────────────────────
@@ -176,12 +171,13 @@
         "tooltip": false
     },
 
+    // ── Tema atual (mocha / frappé / latte) ────────
     "custom/theme": {
-        "exec": "cat ~/.config/matugen/.mode | sed 's/dark/󰖔/; s/light/󰖙/'",
-        "on-click": "~/scripts/toggle-theme.sh",
-        "interval": 1,
+        "exec": "~/.config/waybar/scripts/current-theme.sh",
+        "on-click": "~/.config/mango/theme.sh",
+        "interval": 2,
         "tooltip": true,
-        "tooltip-format": "Toggle dark/light mode"
+        "tooltip-format": "Trocar tema Catppuccin"
     },
 
     // ── Clima ──────────────────────────────────────

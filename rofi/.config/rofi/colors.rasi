@@ -2,10 +2,10 @@
     bg:       #000000;
     bg-alt:   #0d0d0d;
     bg-high:  #111111;
-    fg:       #efe0d6;
-    fg-alt:   #9e8e82;
-    accent:   #ffb77d;
-    accent2:  #e3c0a6;
-    on-accent: #4d2600;
+    fg:       #e3e3d8;
+    fg-alt:   #8f9285;
+    accent:   #b5d087;
+    accent2:  #c1caab;
+    on-accent: #223600;
     urgent:   #e05050;
 }
